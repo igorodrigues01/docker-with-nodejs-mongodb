@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+  node:
+    image: node:alpine
+    container_name: nodejs
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    volumes: 
+      - .:/usr/node/app
+      - ./node_modules:/usr/node/app/node_modules
+    working_dir: /usr/node/app
+    command: npm start
+
+  db:
+    image: mongo
+    restart: always
+    container_name: db
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME:mongo
+      - MONGO_INITDB_ROOT_PASSWORD:mongo
+
+
